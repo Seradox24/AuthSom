@@ -1,0 +1,57 @@
+name: authsom
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${KEYCLOAK_DB_NAME:-keycloak}
+      POSTGRES_USER: ${KEYCLOAK_DB_USER:-keycloak}
+      POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?Define KEYCLOAK_DB_PASSWORD en .env}
+    volumes:
+      - keycloak_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.5
+    restart: unless-stopped
+    command: start --import-realm
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: db
+      KC_DB_URL_PORT: "5432"
+      KC_DB_URL_DATABASE: ${KEYCLOAK_DB_NAME:-keycloak}
+      KC_DB_USERNAME: ${KEYCLOAK_DB_USER:-keycloak}
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USERNAME:?Define KEYCLOAK_ADMIN_USERNAME en el archivo de secretos}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?Define KEYCLOAK_ADMIN_PASSWORD en el archivo de secretos}
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:?Define KEYCLOAK_HOSTNAME en el archivo de secretos}
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY_HEADERS: ${KEYCLOAK_PROXY_HEADERS:-xforwarded}
+      KC_HEALTH_ENABLED: "true"
+      MOODLE_BASE_URL: ${MOODLE_BASE_URL:?Define MOODLE_BASE_URL en el archivo de secretos}
+      MOODLE_OIDC_CLIENT_SECRET: ${MOODLE_OIDC_CLIENT_SECRET:?Define MOODLE_OIDC_CLIENT_SECRET en el archivo de secretos}
+    ports:
+      - "${KEYCLOAK_BIND_ADDRESS:-127.0.0.1}:${KEYCLOAK_HTTP_PORT:-8080}:8080"
+    volumes:
+      - ./keycloak/educacion-realm.json:/opt/keycloak/data/import/educacion-realm.json:ro
+    healthcheck:
+      test:
+        - CMD
+        - bash
+        - -ec
+        - 'exec 3<>/dev/tcp/127.0.0.1/9000; printf "GET /health/ready HTTP/1.0\r\nHost: localhost\r\n\r\n" >&3; grep -q "HTTP/1.0 200" <&3'
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 120s
+
+volumes:
+  keycloak_db_data:
