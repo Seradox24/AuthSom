@@ -21,6 +21,15 @@ Nginx y rutas del servidor se configuran en la infraestructura de cada entorno.
 Por defecto se esperan cabeceras `X-Forwarded-*`; puede seleccionarse `forwarded`
 con `KEYCLOAK_PROXY_HEADERS` si el proxy utiliza esa cabecera.
 
+## Desarrollo
+
+La rama `dev` incluye una variante local sin TLS para pruebas de integración:
+
+- `compose.dev.yaml` y `.env.dev.example`: proyecto Docker `authsom-dev` en el puerto 8081.
+- `DEV.md`: arranque, usuario de prueba e integración con otros servicios.
+
+No comparte volumen, base de datos ni puertos con la instalación de producción.
+
 ## Configuración inicial
 
 | Variable | Uso |

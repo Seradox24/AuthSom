@@ -1,0 +1,7 @@
+name: authsom-dev
+
+services:
+  keycloak:
+    command: start-dev --import-realm
+    environment:
+      KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-http://localhost:8081}
