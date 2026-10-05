@@ -39,7 +39,12 @@ docker compose -f compose.yaml -f compose.dev.yaml exec keycloak bash -ec '
 | Web Login (SPA, navegador) | Issuer `http://localhost:8081/realms/educacion`, client `web-login` |
 | Flutter escritorio | Issuer `http://localhost:8081/realms/educacion`, client `flutter-desktop` |
 | `lrs_bridge` (contenedor) | `OIDC_ISSUER=http://localhost:8081/realms/educacion` y `OIDC_JWKS_URL=http://host.docker.internal:8081/realms/educacion/protocol/openid-connect/certs` |
-| Moodle (contenedor) | Issuer `http://localhost:8081/realms/educacion`, client `moodle` y el secreto `MOODLE_OIDC_CLIENT_SECRET`; añadir `extra_hosts: ["localhost:host-gateway"]` al servicio para que el contenedor alcance Keycloak |
+| Moodle (contenedor) | Client `moodle`, secreto `MOODLE_OIDC_CLIENT_SECRET`, autorización en `http://localhost:8081` y token endpoint en `http://host.docker.internal:8081/realms/educacion/protocol/openid-connect/token`; permitir el puerto y la IP en la seguridad HTTP de Moodle |
+
+Ver [consideraciones de instalación y ejecución](doc/consideraciones-instalacion-y-ejecucion.md)
+para los endpoints completos, la excepción cURL acotada, el callback de
+`auth_oidc` y la instalación del tema con el logo de Moodle. No redefinir
+`localhost` dentro del contenedor.
 
 Cambios de redirect URI o clientes: hacerlos en la administración o por API. La
 importación del realm solo se aplica en el primer arranque; para reimportar el

@@ -5,3 +5,5 @@ services:
     command: start-dev --import-realm
     environment:
       KC_HOSTNAME: ${KEYCLOAK_HOSTNAME:-http://localhost:8081}
+    volumes:
+      - ./keycloak/themes/moodle:/opt/keycloak/themes/moodle:ro
