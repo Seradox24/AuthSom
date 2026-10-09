@@ -47,8 +47,9 @@ Los valores del ejemplo deben sustituirse antes de arrancar.
 
 ## Realm y clientes
 
-Se importa `educacion` con cuatro clientes: `moodle`, `flutter-desktop`,
-`web-login` y `lrs-bridge`. No incluye usuarios de demostración.
+Se importa `educacion` con cinco clientes: `moodle`, `flutter-desktop`
+(laboratorio `login_flutter`), `launcher-windows`, `web-login` y `lrs-bridge`.
+Cada aplicación usa su propio cliente dentro del mismo realm. No incluye usuarios de demostración.
 Moodle usa un cliente confidencial con secreto, compatible con OAuth 2 estándar
 de Moodle 5.2. Los clientes públicos utilizan PKCE S256.
 

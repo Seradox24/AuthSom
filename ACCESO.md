@@ -22,6 +22,7 @@ la administración; no se importan cuentas de ejemplo.
 | --- | --- | --- |
 | `moodle` | Confidencial, con secreto | `${MOODLE_BASE_URL}/admin/oauth2callback.php` |
 | `flutter-desktop` | Público, PKCE S256 | `http://localhost:14100/callback`, `http://127.0.0.1:14100/callback` |
+| `launcher-windows` | Público, PKCE S256, sin Direct Access Grants | `http://127.0.0.1:14100/callback`, `http://localhost:14100/callback` |
 | `web-login` | Público, PKCE S256 | `http://localhost:3000/callback` |
 | `lrs-bridge` | Bearer-only | Ninguno |
 

@@ -67,6 +67,25 @@
       ]
     },
     {
+      "clientId": "launcher-windows",
+      "name": "Launcher Windows",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://127.0.0.1:14100/callback",
+        "http://localhost:14100/callback"
+      ],
+      "webOrigins": [],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    },
+    {
       "clientId": "web-login",
       "name": "Web Login",
       "enabled": true,
