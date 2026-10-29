@@ -2,3 +2,5 @@
 .env.*
 !.env.example
 !.env.dev.example
+!.env.stt.example
+__pycache__/
