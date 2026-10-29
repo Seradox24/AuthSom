@@ -52,13 +52,22 @@ virtual host propio, ejecutar nginx -t antes de recargar. Sobrescribir cabeceras
 forwarded y mantener PostgreSQL/9000 internos; HTTP 8080 solo en loopback.
 El admin inicial es temporal: crear permanente, asignar rol admin en master,
 probar autenticación y eliminar temporal. Retirar variables bootstrap del archivo
-privado y recrear solo Keycloak. `admin.py` sin --initialize verifica sin mutar.
+privado y recrear solo Keycloak. El lanzador agrega `compose.bootstrap.yaml`
+únicamente cuando existen ambas credenciales: al retirarlas omite por completo
+las variables KC_BOOTSTRAP_ADMIN_*; no las envía vacías. `admin.py` sin
+--initialize verifica sin mutar.
 La consola pública requiere autenticación propia de Keycloak.
 
 `scripts/test_profiles.py` comprueba dos modelos Compose sin arrancar contenedores
 y rechazos de configuración. `admin.py` verifica issuer/JWKS, clientes
 deshabilitados, administrador y ausencia de bootstrap. SMTP no configurado;
 resetPasswordAllowed permanece false. No cambiar autenticación de Moodle.
+
+Programar con `scripts/install_timer.py --env-file /absolute/profile.env
+--calendar '*-*-* 04:35:00 America/Santiago'`. La unidad propia utiliza la ruta
+del código instalado y el perfil explícito; otro calendario se selecciona como
+parámetro. No reemplaza unidades diferentes sin revisión. Revisar fallos con
+`journalctl -u <COMPOSE_PROJECT_NAME>-backup.service`.
 
 ## Respaldo, restauración y actualización
 

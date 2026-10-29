@@ -24,6 +24,10 @@ with tempfile.TemporaryDirectory(prefix='authsom-profiles-') as temporary:
         model = json.loads(compose(c,'config','--format','json',capture_output=True).stdout)
         assert model['services']['keycloak']['ports'][0]['host_ip'] == '127.0.0.1'
         assert not model['services']['db'].get('ports')
+        assert 'KC_BOOTSTRAP_ADMIN_USERNAME' not in model['services']['keycloak']['environment']
+        c.update(KEYCLOAK_ADMIN_USERNAME='fixture-bootstrap',KEYCLOAK_ADMIN_PASSWORD='fixture-only')
+        initial = json.loads(compose(c,'config','--format','json',capture_output=True).stdout)
+        assert initial['services']['keycloak']['environment']['KC_BOOTSTRAP_ADMIN_USERNAME'] == 'fixture-bootstrap'
         models.append(model)
     assert models[0]['name'] != models[1]['name']
     assert models[0]['networks']['default']['name'] != models[1]['networks']['default']['name']

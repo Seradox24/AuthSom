@@ -114,6 +114,10 @@ def backup(c):
     destination.mkdir(parents=True, exist_ok=True, mode=0o700)
     with (destination/'.backup.lock').open('w') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX|fcntl.LOCK_NB)
+        states = compose(c,'ps','--format','json','keycloak','db',capture_output=True,text=True).stdout
+        services = [json.loads(line) for line in states.splitlines() if line.strip()]
+        if len(services) != 2 or any(s.get('State') != 'running' or s.get('Health') != 'healthy' for s in services):
+            raise ValueError('Both services must be running and healthy before backup')
         stamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
         pending = destination/(stamp+'.partial')
         pending.mkdir(mode=0o700)
