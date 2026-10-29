@@ -78,9 +78,12 @@ def profile(path):
 def compose(c, *args, **kwargs):
     env = dict(os.environ)
     env.update({k:v for k,v in c.items() if not k.startswith('_')})
-    return subprocess.run(['docker','compose','--project-directory',str(ROOT),
+    command = ['docker','compose','--project-directory',str(ROOT),
         '--env-file',c['_profile'],'--env-file',c['_secrets'],'-f',str(ROOT/'compose.stt.yaml'),
-        '-p',c['COMPOSE_PROJECT_NAME'],*args], env=env, check=True, **kwargs)
+        '-p',c['COMPOSE_PROJECT_NAME']]
+    if c.get('KEYCLOAK_ADMIN_PASSWORD'):
+        command += ['-f',str(ROOT/'compose.bootstrap.yaml')]
+    return subprocess.run(command+list(args), env=env, check=True, **kwargs)
 
 def render(c):
     realm = json.loads((ROOT/'keycloak/educacion-realm.json').read_text())
