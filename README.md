@@ -21,6 +21,15 @@ Nginx y rutas del servidor se configuran en la infraestructura de cada entorno.
 Por defecto se esperan cabeceras `X-Forwarded-*`; puede seleccionarse `forwarded`
 con `KEYCLOAK_PROXY_HEADERS` si el proxy utiliza esa cabecera.
 
+## Desarrollo
+
+La rama `dev` incluye una variante local sin TLS para pruebas de integración:
+
+- `compose.dev.yaml` y `.env.dev.example`: proyecto Docker `authsom-dev` en el puerto 8081.
+- `DEV.md`: arranque, usuario de prueba e integración con otros servicios.
+
+No comparte volumen, base de datos ni puertos con la instalación de producción.
+
 ## Configuración inicial
 
 | Variable | Uso |
@@ -38,8 +47,9 @@ Los valores del ejemplo deben sustituirse antes de arrancar.
 
 ## Realm y clientes
 
-Se importa `educacion` con cuatro clientes: `moodle`, `flutter-desktop`,
-`web-login` y `lrs-bridge`. No incluye usuarios de demostración.
+Se importa `educacion` con cinco clientes: `moodle`, `flutter-desktop`
+(laboratorio `login_flutter`), `launcher-windows`, `web-login` y `lrs-bridge`.
+Cada aplicación usa su propio cliente dentro del mismo realm. No incluye usuarios de demostración.
 Moodle usa un cliente confidencial con secreto, compatible con OAuth 2 estándar
 de Moodle 5.2. Los clientes públicos utilizan PKCE S256.
 
