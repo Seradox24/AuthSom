@@ -17,8 +17,8 @@ subprocess.run(['systemd-analyze','calendar',a.calendar],check=True,stdout=subpr
 name = c['COMPOSE_PROJECT_NAME']+'-backup'
 command = ' '.join(json.dumps(x) for x in ['/usr/bin/python3',str(ROOT/'scripts/stt.py'),'--env-file',c['_profile'],'backup'])
 units = {
-    'service':'[Unit]\nDescription=Consistent AuthSom PostgreSQL backup\nRequires=docker.service\nAfter=docker.service\n[Service]\nType=oneshot\nUMask=0077\nExecStart='+command+'\n',
-    'timer':'[Unit]\nDescription=Daily AuthSom backup\n[Timer]\nOnCalendar='+a.calendar+'\nPersistent=true\n[Install]\nWantedBy=timers.target\n'}
+    'service':'[Unit]\nDescription=Consistent Keycloak OIDC PostgreSQL backup\nRequires=docker.service\nAfter=docker.service\n[Service]\nType=oneshot\nUMask=0077\nExecStart='+command+'\n',
+    'timer':'[Unit]\nDescription=Daily Keycloak OIDC backup\n[Timer]\nOnCalendar='+a.calendar+'\nPersistent=true\n[Install]\nWantedBy=timers.target\n'}
 for suffix,content in units.items():
     path = Path('/etc/systemd/system')/(name+'.'+suffix)
     if path.exists() and path.read_text() != content:

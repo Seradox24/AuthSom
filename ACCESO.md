@@ -1,4 +1,4 @@
-# Acceso a AuthSom
+# Acceso a Keycloak OIDC
 
 Todas las rutas públicas parten de `KEYCLOAK_HOSTNAME`, definido en `.env`.
 Keycloak 26 no utiliza el prefijo `/auth`.

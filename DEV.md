@@ -1,8 +1,8 @@
 # Entorno de desarrollo
 
 Instancia Keycloak local para pruebas de integración, sin TLS y con proyecto
-Docker propio (`authsom-dev`), de modo que puede convivir con la instalación de
-producción (`authsom`) sin compartir base de datos, volumen ni puertos.
+Docker propio (`keycloak-oidc-dev`), de modo que puede convivir con la instalación de
+producción (`keycloak-oidc`) sin compartir base de datos, volumen ni puertos.
 
 ## Arranque
 
@@ -57,7 +57,7 @@ editar `KEYCLOAK_HOSTNAME`, `KEYCLOAK_BIND_ADDRESS` y `KEYCLOAK_HTTP_PORT` en
 
 ## Diferencias con producción
 
-- `start-dev` con HTTP, proyecto `authsom-dev` y puerto 8081.
+- `start-dev` con HTTP, proyecto `keycloak-oidc-dev` y puerto 8081.
 - Sin proxy TLS ni cabeceras de reenvío reales.
 - Datos y realm desechables; no migrar este volumen a producción.
 - Para producción usar `main` y las instrucciones de `README.md`.

@@ -1,4 +1,4 @@
-# AuthSom independiente para STT
+# Keycloak OIDC independiente para STT
 
 Variante `compose.stt.yaml`, seleccionada explícitamente; no combinar con el
 Compose de desarrollo ni modificar una instalación anterior. La fuente incluye

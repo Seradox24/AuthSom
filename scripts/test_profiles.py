@@ -4,16 +4,16 @@ from pathlib import Path
 import tempfile
 from stt import ROOT, compose, profile, render
 
-with tempfile.TemporaryDirectory(prefix='authsom-profiles-') as temporary:
+with tempfile.TemporaryDirectory(prefix='keycloak-oidc-profiles-') as temporary:
     root = Path(temporary)
     models = []
     for i in range(2):
         env = (ROOT/'.env.stt.example').read_text()
-        env = env.replace('example-authsom-prod','isolated-'+str(i)).replace('auth.example.com','auth'+str(i)+'.example.com')
+        env = env.replace('example-keycloak-oidc-prod','isolated-'+str(i)).replace('auth.example.com','auth'+str(i)+'.example.com')
         env = env.replace('/srv/example',str(root/str(i))).replace('18081',str(18181+i))
         path = root/(str(i)+'.env')
         path.write_text(env)
-        secret = root/str(i)/'secretos/authsom/prod'
+        secret = root/str(i)/'secretos/keycloak-oidc/prod'
         secret.mkdir(parents=True)
         (secret/'secrets.env').write_text('KEYCLOAK_DB_PASSWORD=fixture-only-not-a-real-password\n')
         c = profile(path)

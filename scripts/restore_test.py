@@ -25,7 +25,7 @@ def main():
         assert Path(name).name == name
         with (source/name).open('rb') as stream: assert hashlib.file_digest(stream,'sha256').hexdigest() == digest
     evidence = Path(a.evidence)
-    scratch = Path(tempfile.mkdtemp(prefix='authsom-restore-',dir=evidence.parent)).resolve()
+    scratch = Path(tempfile.mkdtemp(prefix='keycloak-oidc-restore-',dir=evidence.parent)).resolve()
     os.chmod(scratch,0o700)
     for filename,label in [('configuration.tar.gz','configuration'),('secrets.tar.gz','secrets')]:
         with tarfile.open(source/filename) as archive:
@@ -35,7 +35,7 @@ def main():
                     raise ValueError('Unsafe archive entry')
             archive.extractall(scratch,filter='data')
     restored = read_env(scratch/'configuration/profile.env')
-    restored['COMPOSE_PROJECT_NAME'] = 'stt-authsom-restore-'+source.name.replace('_','-')
+    restored['COMPOSE_PROJECT_NAME'] = 'stt-keycloak-oidc-restore-'+source.name.replace('_','-')
     restored.update(CONFIG_ROOT=str(scratch/'configuration'),SECRET_ROOT=str(scratch/'secrets'),
                     DATA_ROOT=str(scratch/'data'),BACKUP_ROOT=str(scratch/'backups'),KEYCLOAK_HTTP_PORT='18182')
     profile_path = scratch/'restore.env'
@@ -91,7 +91,7 @@ def main():
     finally:
         dc('down',stdout=subprocess.DEVNULL)
         if success:
-            assert scratch.parent == evidence.parent.resolve() and scratch.name.startswith('authsom-restore-')
+            assert scratch.parent == evidence.parent.resolve() and scratch.name.startswith('keycloak-oidc-restore-')
             shutil.rmtree(scratch)
     print('Isolated restoration verified; temporary containers, network and files removed')
 
