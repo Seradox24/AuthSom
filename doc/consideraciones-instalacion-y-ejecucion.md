@@ -147,11 +147,10 @@ Endpoints efectivos:
 | Logout | `http://localhost:8081/realms/educacion/protocol/openid-connect/logout` |
 | Callback auth_oidc | `http://localhost:18080/auth/oidc/` |
 
-El cliente `moodle` existente admite ese callback y también
-`http://localhost:18080/admin/oauth2callback.php`. El JSON de importación del
-repositorio solo declara el segundo: en una instalación nueva de `auth_oidc`
-hay que añadir el primero, por consola/API o al preparar el JSON. Son rutas
-para integraciones distintas y no se deben intercambiar.
+El cliente `moodle` del entorno revisado admite ambos callbacks. La plantilla
+actual también incluye los dos a partir de `MOODLE_BASE_URL`. Para un realm
+ya importado, comprobar que el cliente tenga el retorno exacto de
+`auth_oidc` y añadirlo por consola o API si falta.
 
 ### Aplicar la excepción en una instalación local
 

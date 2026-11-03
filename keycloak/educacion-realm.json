@@ -27,7 +27,10 @@
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": false,
       "serviceAccountsEnabled": false,
-      "redirectUris": ["${MOODLE_BASE_URL}/admin/oauth2callback.php"],
+      "redirectUris": [
+        "${MOODLE_BASE_URL}/admin/oauth2callback.php",
+        "${MOODLE_BASE_URL}/auth/oidc/"
+      ],
       "webOrigins": ["${MOODLE_BASE_URL}"]
     },
     {
