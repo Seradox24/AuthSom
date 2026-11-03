@@ -20,7 +20,7 @@ la administración; no se importan cuentas de ejemplo.
 
 | Cliente | Tipo | Retorno inicial |
 | --- | --- | --- |
-| `moodle` | Confidencial, con secreto | `${MOODLE_BASE_URL}/admin/oauth2callback.php` |
+| `moodle` | Confidencial, con secreto | `${MOODLE_BASE_URL}/admin/oauth2callback.php` y `${MOODLE_BASE_URL}/auth/oidc/` |
 | `flutter-desktop` | Público, PKCE S256 | `http://localhost:14100/callback`, `http://127.0.0.1:14100/callback` |
 | `launcher-windows` | Público, PKCE S256, sin Direct Access Grants | `http://127.0.0.1:14100/callback`, `http://localhost:14100/callback` |
 | `web-login` | Público, PKCE S256 | `http://localhost:3000/callback` |
@@ -30,6 +30,16 @@ En Moodle configurar un proveedor OpenID Connect con base
 `<KEYCLOAK_HOSTNAME>/realms/educacion`, client ID `moodle` y el secreto inicial
 `MOODLE_OIDC_CLIENT_SECRET`; habilitar la autenticación OAuth 2 y verificar
 los mapeos de nombre, apellido y correo.
+
+Para el flujo con `auth_oidc` en Moodle 5.3, seleccionar **Other** como tipo
+de proveedor, usar el cliente confidencial `moodle` y los endpoints de
+autorización y token del realm. Mantener el scope `openid profile email` y
+el retorno exacto `${MOODLE_BASE_URL}/auth/oidc/`, con la barra final.
+`MOODLE_BASE_URL` debe coincidir con la URL de Moodle, sin barra final.
+
+En realms existentes, añadir ese retorno desde la administración de Keycloak
+conservando los retornos utilizados. La importación de la plantilla solo
+inicializa realms nuevos.
 
 ## Verificación
 
