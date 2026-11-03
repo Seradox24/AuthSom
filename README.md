@@ -1,4 +1,4 @@
-# AuthSom
+# Keycloak OIDC Stack
 
 Proveedor de identidad OpenID Connect con Keycloak 26.7.5 y PostgreSQL 17.
 El proyecto contiene el servicio y su configuración inicial; puede instalarse
@@ -25,7 +25,7 @@ con `KEYCLOAK_PROXY_HEADERS` si el proxy utiliza esa cabecera.
 
 La rama `dev` incluye una variante local sin TLS para pruebas de integración:
 
-- `compose.dev.yaml` y `.env.dev.example`: proyecto Docker `authsom-dev` en el puerto 8081.
+- `compose.dev.yaml` y `.env.dev.example`: proyecto Docker `keycloak-oidc-dev` en el puerto 8081.
 - `DEV.md`: arranque, usuario de prueba e integración con otros servicios.
 
 No comparte volumen, base de datos ni puertos con la instalación de producción.
@@ -66,8 +66,10 @@ contraseña PostgreSQL en `.env` no cambia la contraseña de una base ya creada.
 ## Persistencia y operación
 
 Compose administra los nombres de contenedores, red y volumen bajo el proyecto
-`authsom`. Para varias instalaciones puede usarse `docker compose -p <nombre>`
-y un puerto diferente. Cada instalación conserva su propio volumen.
+`keycloak-oidc`. Para varias instalaciones puede usarse `docker compose -p <nombre>`
+y un puerto diferente. Cada instalación conserva su propio volumen. Para operar
+una instalación anterior, selecciona su nombre de proyecto original con
+`-p` o con su perfil explícito antes de ejecutar Compose.
 
 - `docker compose stop`: detiene los servicios conservando datos.
 - `docker compose down`: retira contenedores y red, conservando el volumen.

@@ -1,6 +1,6 @@
 # Consideraciones de instalación y ejecución
 
-Notas operativas para levantar AuthSom (Keycloak) e integrarlo con otros
+Notas operativas para levantar Keycloak OIDC e integrarlo con otros
 servicios. Recoge los problemas encontrados durante las pruebas de integración
 locales y cómo evitarlos.
 
@@ -236,7 +236,7 @@ services:
       - ./keycloak/themes/moodle:/opt/keycloak/themes/moodle:ro
 ```
 
-Desde `D:\Servidor\sso\AuthSom`, validar y recrear el servicio:
+Desde la raíz del repositorio, validar y recrear el servicio:
 
 ```powershell
 docker compose -f compose.yaml -f compose.dev.yaml config --quiet

@@ -1,4 +1,4 @@
-name: authsom-dev
+name: keycloak-oidc-dev
 
 services:
   keycloak:
