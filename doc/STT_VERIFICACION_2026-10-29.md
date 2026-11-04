@@ -1,4 +1,4 @@
-# Instalación STT verificada — 29 de octubre de 2026
+# Keycloak OIDC Stack en STT — 29 de octubre de 2026
 
 Destino: auth.minayao.site, realm educacion, Compose stt-authsom-prod.
 Servicio independiente, sin habilitar SSO en Moodle ni otras aplicaciones.
