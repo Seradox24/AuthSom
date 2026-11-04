@@ -8,7 +8,7 @@ locales y cómo evitarlos.
 
 - Producción: `compose.yaml` + `.env` (TLS y proxy a cargo del entorno).
 - Desarrollo: `compose.yaml` + `compose.dev.yaml` + `.env` (proyecto
-  proyecto local independiente, puerto 8081, sin TLS). Ver `DEV.md`.
+  local independiente, puerto 8081, sin TLS). Ver `DEV.md`.
 - Usar siempre proyectos Compose y volúmenes distintos entre dev y producción;
   `down --volumes` borra la base y el realm se reimporta solo en un volumen nuevo.
 - La importación del realm aplica una única vez (primer arranque). Los cambios
